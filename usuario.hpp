@@ -54,13 +54,15 @@ class Usuario{
     const Cadena& direccion() const {return dir_;}
     const Tarjetas& tarjetas() const {return T;}
     const Articulos& compra() const {return A;}
-
+    //asociaciones
+    void es_titular_de(Tarjeta& t);
+    void no_es_titular_de(Tarjeta& t);
 
     ~Usuario();
 
     class Id_duplicado{
         public:
-        Id_duplicado(const Cadena& cad); //: idd_(cad) {}
+        Id_duplicado(const Cadena& cad): idd_(cad) {}
         const Cadena& idd() const {return idd_;} 
         private:
         Cadena idd_;

@@ -27,7 +27,7 @@ Numero::Numero(Cadena& num){
     if(!luhn(num)){
         throw Incorrecto(NO_VALIDO);
     }
-    numero_ = num;
+    num_ = num;
 
 }
 
@@ -50,10 +50,10 @@ bool luhn(const Cadena& numero){
 
 Numero::operator const char *() const{
     
-    return numero_.c_str();
+    return num_.c_str();
 }
 
 bool operator <(const Numero& a, const Numero& b){
 
-    return(a.numero_ < b.numero_);
+    return(a.num_ < b.num_);
 }

@@ -22,7 +22,7 @@ class Numero{
     friend bool operator <(const Numero& a, const Numero& b);
 
     private:
-    Cadena numero_;
+    Cadena num_;
 };
 
 
