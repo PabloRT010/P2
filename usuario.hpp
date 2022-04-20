@@ -2,13 +2,13 @@
 #define CLAVE_HPP_
 #include "cadena.hpp"
 #include "articulo.hpp"
-#include "numero.hpp"
 #include "tarjeta.hpp"
 #include <iostream>
 #include <map>
 #include <unordered_map>
 #include <unordered_set>
-
+#include <iomanip>
+#include<utility>
 
 class Clave{
 
@@ -57,8 +57,11 @@ class Usuario{
     //asociaciones
     void es_titular_de(Tarjeta& t);
     void no_es_titular_de(Tarjeta& t);
+    void compra(Articulo& art, int cant = 1);
+    int n_articulos()const;
 
     ~Usuario();
+    friend std::ostream& operator << (std::ostream& os, const Usuario& u);//aqui lo hago friend porque hay varias clases en el fichero
 
     class Id_duplicado{
         public:
@@ -73,17 +76,11 @@ class Usuario{
     Clave clave_;
     typedef std::unordered_set<Cadena> ID; //duplicidad de usuarios
     static ID ID_;
-    Tarjetas T;
-    Articulos A;
+    Tarjetas T; //tarjetas a las que esta asociado
+    Articulos A; //articulos de su carrito
 
 };
 
-
-
-
-
-
-
-
+std::ostream& mostrar_carro(std::ostream& os, Usuario& u);
 
 #endif

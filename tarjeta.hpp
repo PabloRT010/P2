@@ -1,12 +1,34 @@
 #ifndef TARJETA_HPP
 #define TARJETA_HPP
 #include "usuario.hpp"
-#include "numero.hpp"
 #include "fecha.hpp"
 #include "cadena.hpp"
 #include <iostream>
 #include <set>
 #include <iomanip>
+class Tarjeta;
+class Usuario;
+class Numero{
+    public:
+    Numero(Cadena& num);
+    bool luhn(const Cadena& numero);
+    enum Razon{LONGITUD, DIGITOS, NO_VALIDO};
+    class Incorrecto{
+        public:
+        Incorrecto(Razon r): r_(r){}
+        const Razon& razon() const {return r_;} 
+
+        private:
+        Razon r_;
+    };
+    friend Tarjeta;
+    operator const char*() const; //constructor de conversion
+
+    friend bool operator <(const Numero& a, const Numero& b);
+
+    private:
+    Cadena num_;
+};
 
 class Tarjeta{
     public:
@@ -44,7 +66,7 @@ class Tarjeta{
     };
 
     class Desactivada;
-
+    friend Usuario;
     ~Tarjeta();
     private:
     const Numero numero_;
