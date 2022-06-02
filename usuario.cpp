@@ -13,9 +13,11 @@ Clave::Clave(const char* contr){
     const char* caracteres = "0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
     srand(rand() % 100);
     const char salt[2] = {caracteres[rand() % 64], caracteres[rand() % 64]};
-    if(crypt(contr, salt) == NULL)
-        throw Clave::Incorrecta(Clave::ERROR_CRYPT);
-    contrasenna_ = crypt(contr, salt);
+    
+    if (const char* pcc = crypt(contr, salt))
+      contrasenna_ = pcc;
+    else
+       throw Incorrecta(ERROR_CRYPT);
 
 }
 
