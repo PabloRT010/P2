@@ -19,7 +19,7 @@ class Clave{
 
     Clave(const char* contr);
    // void cifrar_clave(Cadena contr); //devuelve contrasenna encriptada
-    const Cadena& clave() const {return contrasenna_;} //devuelve la contrasenna CIFRADA 
+    Cadena clave() const {return contrasenna_;} //devuelve la contrasenna CIFRADA 
     bool verifica(const char* cad) const;
     enum Razon{CORTA, ERROR_CRYPT};
 
@@ -27,7 +27,7 @@ class Clave{
         public:
         
         Incorrecta(Razon r): razon_(r){}
-        const Razon& razon() const {return razon_;}
+        Razon razon() const {return razon_;}
 
         private:
         Razon razon_;
@@ -51,10 +51,10 @@ class Usuario{
     Usuario& operator =(const Usuario& u) = delete;
 
     //consultoras
-    const Cadena& id() const {return id_;}
-    const Cadena& nombre() const {return nom_;}
-    const Cadena& apellidos() const {return apell_;}
-    const Cadena& direccion() const {return dir_;}
+    Cadena id() const {return id_;}
+    Cadena nombre() const {return nom_;}
+    Cadena apellidos() const {return apell_;}
+    Cadena direccion() const {return dir_;}
     const Tarjetas& tarjetas() const {return T;}
     const Articulos& compra() const {return A;}
     //asociaciones
@@ -69,13 +69,13 @@ class Usuario{
     class Id_duplicado{
         public:
         Id_duplicado(const Cadena& cad): idd_(cad) {}
-        const Cadena& idd() const {return idd_;} 
+        Cadena idd() const {return idd_;} 
         private:
         Cadena idd_;
     };
 
     private:
-    const Cadena id_, nom_, apell_, dir_;
+    Cadena id_, nom_, apell_, dir_;
     Clave clave_;
     typedef std::unordered_set<Cadena> ID; //duplicidad de usuarios
     static ID ID_;

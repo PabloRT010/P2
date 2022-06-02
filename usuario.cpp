@@ -7,20 +7,15 @@ Usuario::ID Usuario::ID_;
 
 Clave::Clave(const char* contr){
 
-    Cadena contrasenna(contr);
+    if(strlen(contr) < 5)
+        throw Clave::Incorrecta(Clave::CORTA);
 
-    if(contrasenna.length() < 5){
-        throw Incorrecta(CORTA);
-    }
-    //ciframos la clave
-    std::random_device rd; //elemento con el que generaremos un carácter aleatorio
-    std::uniform_int_distribution<char> dis('0', 'z'); //0-9, A-Z, a-z
-    const char salt[3] = {dis(rd),dis(rd),'\0'}; //generamos salt, la cual es una cadena de 2 caracteres aleatorios para generar un hash
+    const char* caracteres = "0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+    srand(rand() % 100);
+    const char salt[2] = {caracteres[rand() % 64], caracteres[rand() % 64]};
+    if(crypt(contr, salt) == NULL)
+        throw Clave::Incorrecta(Clave::ERROR_CRYPT);
     contrasenna_ = crypt(contr, salt);
-    
-    if(contrasenna_ == NULL){
-        throw Incorrecta(ERROR_CRYPT);
-    }
 
 }
 
