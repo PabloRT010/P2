@@ -43,6 +43,7 @@ protected:
 
 int main()
 {
+  std::cout << "Hola que tal";
   cout.imbue(std::locale(std::locale("es_ES.UTF-8"), new sin_separador()));
   
   /******** USUARIOS ************/

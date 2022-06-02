@@ -15,9 +15,9 @@ class Articulo{
         const Cadena& titulo() const;
         const Fecha& f_publi() const;
         float precio() const; // 2 decimales
-        float& precio(float p);
+        float& precio();
         int stock() const;
-        int& stock(int s);
+        int& stock();
      
     private:
 

@@ -37,7 +37,7 @@ DIRLUHN = ..
 # --- Parte configurable ---
 # Compilador de C++ preferido: el del sistema (c++), el de LLVM (clang++),
 # el de GNU (g++), el mismo en la versión x (g++-x), el de Intel (icpc)...
-CXX = clang++
+CXX = g++
 
 # ¿Qué estándar seguir?
 # c++98 o c++03 (-ansi): estándar de 1998, corregido en 2003. NO USAR YA.
@@ -63,7 +63,7 @@ CPPFLAGS = ${INCLUDES} -D$P
 # -pg        : genera código para escribir información de perfilado
 # -fprofile-arcs : genera código para analizar llamadas a funciones
 # -ftest-coverage: cobertura de pruebas
-CXXFLAGS = ${STD} -g -pedantic -Wall
+CXXFLAGS = ${STD} -g -pedantic -Wall 
 
 # Opciones para el enlazador. Recomendado: ninguna.
 # -pg            : para poder perfilar el programa con gprof

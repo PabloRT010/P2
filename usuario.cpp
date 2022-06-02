@@ -3,6 +3,7 @@
 #include <random>
 #include <map>
 #include <unistd.h>
+Usuario::ID Usuario::ID_;
 
 Clave::Clave(const char* contr){
 
@@ -16,16 +17,16 @@ Clave::Clave(const char* contr){
     std::uniform_int_distribution<char> dis('0', 'z'); //0-9, A-Z, a-z
     const char salt[3] = {dis(rd),dis(rd),'\0'}; //generamos salt, la cual es una cadena de 2 caracteres aleatorios para generar un hash
     contrasenna_ = crypt(contr, salt);
-
+    
     if(contrasenna_ == NULL){
         throw Incorrecta(ERROR_CRYPT);
     }
 
 }
 
-bool Clave::verifica(char* cad){
+bool Clave::verifica(const char* cad) const{
 
-    return (strcmp(crypt(cad,contrasenna_.c_str()), contrasenna_.c_str()));
+    return(contrasenna_ == crypt(cad, contrasenna_.c_str()));
     
 }
 
@@ -66,10 +67,10 @@ std::ostream& operator << (std::ostream& os, const Usuario& u){
     os << u.direccion()<<"\n";
     os << "Tarjetas :"<<"\n";
 
-    for(auto it = u.T.begin(); it != u.T.end(); it++){
+    for(Usuario::Tarjetas::const_iterator it = u.T.begin(); it != u.T.end(); it++){
         os << *(it->second) << "\n"; //mostramos la tarjeta 
     }
-
+    return os;
 }
 
 std::ostream& mostrar_carro(std::ostream& os, Usuario& u){
@@ -77,16 +78,16 @@ std::ostream& mostrar_carro(std::ostream& os, Usuario& u){
     os << "Carrito de compra de " << u.id() << " [Articulos:" << u.compra().size()<<"] " << std::endl;
     os << "===================================================================="<<std::endl;
 
-    for (Usuario::Articulos::iterator it = u.compra().begin(); it != u.compra().end(); it++){
+    for (Usuario::Articulos::const_iterator it = u.compra().begin(); it != u.compra().end(); it++){
         os<<"\t" << it->second <<"\t"<< it->first << "\n";
     }
+
+    return os;
 }
-
-
-
 
 Usuario::~Usuario(){
     for (Usuario::Tarjetas::iterator it = T.begin(); it != T.end(); it++){
         it->second->anula_titular();
     }
+    ID_.erase(id_);
 }

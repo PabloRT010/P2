@@ -90,17 +90,17 @@ Fecha::Fecha(const char* cad){
 Fecha& operator+=(Fecha& f, int n){
 
     //time_t aux = std::time(nullptr);
-    tm* nueva_fecha = localtime(&now);
-    nueva_fecha->tm_mday = f.dia_ + n;
-    nueva_fecha->tm_mon = f.mes_ - 1;
-    nueva_fecha->tm_year = f.anno_ - 1900;
+    tm nueva_fecha = {};
+    nueva_fecha.tm_mday = f.dia_ + n;
+    nueva_fecha.tm_mon = f.mes_ - 1;
+    nueva_fecha.tm_year = f.anno_ - 1900;
 
-    mktime(nueva_fecha); //esta funcion tiene en cuenta los años bisiestos y realiza todas las sumas/restas de meses y años necesarias según la suma de el día de la fecha y el numero
-    f.dia_ = nueva_fecha->tm_mday;
-    f.mes_ = nueva_fecha->tm_mon + 1;
+    mktime(&nueva_fecha); //esta funcion tiene en cuenta los años bisiestos y realiza todas las sumas/restas de meses y años necesarias según la suma de el día de la fecha y el numero
+    f.dia_ = nueva_fecha.tm_mday;
+    f.mes_ = nueva_fecha.tm_mon + 1;
 
     //try{ //probamos si la fecha se encuentra en el intervalo indicado
-    f.probar_anno(nueva_fecha->tm_year + 1900);
+    f.probar_anno(nueva_fecha.tm_year + 1900);
     //}catch(Fecha:: Invalida& e){
     //    cerr<<e.por_que()<<endl;
     
@@ -136,25 +136,25 @@ Fecha operator-(const Fecha& f, int n){
     return t += -n;
 }
 
-Fecha& operator++(Fecha& f){//preincremento
-    return f += 1;
+Fecha& Fecha::operator++(){//preincremento
+    return *this += 1;
 }
 
-Fecha operator++(Fecha& f, int n){//postincremento  
+Fecha Fecha::operator++(int n){//postincremento  
     Fecha t;
-    t = f;
-    f += 1;
+    t = *this;
+    *this += 1;
     return t;
 }
 
-Fecha& operator--(Fecha& f){//predecremento
-    return f+= -1;
+Fecha& Fecha::operator--(){//predecremento
+    return *this+= -1;
 }
 
-Fecha operator--(Fecha& f, int n){
+Fecha Fecha::operator--(int n){
     Fecha t;
-    t = f;
-    f += -1;
+    t = *this;
+    *this += -1;
     return t;
 }
 

@@ -35,6 +35,11 @@ class Fecha{
     unsigned mes()const;
     unsigned anno()const;
 
+    Fecha& operator++();         //preincremento de una fecha
+    Fecha& operator--();         //predecremento de una fecha
+    Fecha operator++(int);    //postincremento de una fecha (pasamos el entero para diferenciar)
+    Fecha operator--(int);    //postdecremento de una fecha (pasamos el entero para diferenciar)
+
     private:
     void probar_dia(unsigned d, unsigned m, unsigned a);
     void probar_mes(unsigned m);
@@ -44,10 +49,10 @@ class Fecha{
 //operadores:
     Fecha operator+(const Fecha& f, int n);   //suma de días a una fecha
     Fecha operator-(const Fecha& f, int n);   //resta de días a una fecha
-    Fecha& operator++(Fecha& f);         //preincremento de una fecha
+   /* Fecha& operator++(Fecha& f);         //preincremento de una fecha
     Fecha& operator--(Fecha& f);         //predecremento de una fecha
     Fecha operator++(Fecha& f, int);    //postincremento de una fecha (pasamos el entero para diferenciar)
-    Fecha operator--(Fecha& f, int);    //postdecremento de una fecha (pasamos el entero para diferenciar)
+    Fecha operator--(Fecha& f, int);    //postdecremento de una fecha (pasamos el entero para diferenciar)*/
     
     
 //comparadores

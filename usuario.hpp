@@ -1,8 +1,8 @@
 #ifndef CLAVE_HPP_
 #define CLAVE_HPP_
 #include "cadena.hpp"
-#include "articulo.hpp"
 #include "tarjeta.hpp"
+#include "articulo.hpp"
 #include <iostream>
 #include <map>
 #include <unordered_map>
@@ -10,6 +10,9 @@
 #include <iomanip>
 #include<utility>
 
+class Tarjeta;
+class Numero;
+class Articulo;
 class Clave{
 
     public:
@@ -17,7 +20,7 @@ class Clave{
     Clave(const char* contr);
    // void cifrar_clave(Cadena contr); //devuelve contrasenna encriptada
     const Cadena& clave() const {return contrasenna_;} //devuelve la contrasenna CIFRADA 
-    bool verifica(char* cad);
+    bool verifica(const char* cad) const;
     enum Razon{CORTA, ERROR_CRYPT};
 
     class Incorrecta{

@@ -18,9 +18,7 @@ Cadena::Cadena(const Cadena& cad){
     tam_ = cad.tam_;
 } 
  
-Cadena::Cadena(const char* cad){
-
-    tam_ = strlen(cad);
+Cadena::Cadena(const char* cad): tam_(strlen(cad)){
     s_ = new char[tam_ + 1];
     strcpy(s_, cad);
     

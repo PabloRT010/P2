@@ -1,6 +1,5 @@
 #ifndef TARJETA_HPP
 #define TARJETA_HPP
-#include "usuario.hpp"
 #include "fecha.hpp"
 #include "cadena.hpp"
 #include <iostream>
@@ -8,15 +7,16 @@
 #include <iomanip>
 class Tarjeta;
 class Usuario;
+//class Cadena;
+
 class Numero{
     public:
-    Numero(Cadena& num);
-    bool luhn(const Cadena& numero);
+    Numero(const Cadena& num);
     enum Razon{LONGITUD, DIGITOS, NO_VALIDO};
     class Incorrecto{
         public:
         Incorrecto(Razon r): r_(r){}
-        const Razon& razon() const {return r_;} 
+        Razon razon() const {return r_;} 
 
         private:
         Razon r_;
@@ -39,14 +39,14 @@ class Tarjeta{
     Tarjeta& operator =(const Tarjeta& t) = delete;
     //observadoras
     const Numero& numero()const {return numero_;}
-    const Usuario& titular()const{return *titular_;}
+    const Usuario* titular()const{return titular_;}
     const Fecha& caducidad()const {return caducidad_;}
-    const bool activa()const{return activa_;}
+    bool activa()const{return activa_;}
     const Tipo tipo() const;
 
-    bool activa(bool par = true);
+    bool activa(bool par){activa_ = par; return activa_;}
     void anula_titular();
-    friend bool operator <(Tarjeta& a, Tarjeta& b);
+    friend bool operator <(const Tarjeta& a, const Tarjeta& b);
     class Caducada{
         public:
         Caducada(const Fecha& f):f_caducada_(f){}
@@ -80,9 +80,5 @@ class Tarjeta{
 std::ostream& operator <<(std::ostream& os, const Tarjeta& tar);
 std::ostream& operator<<(std::ostream &os, Tarjeta::Tipo t);
 
-bool Tarjeta::activa(bool par){
-    activa_ = par;
-    return activa_;
-}
 
 #endif

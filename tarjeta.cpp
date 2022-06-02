@@ -1,11 +1,16 @@
 #include "tarjeta.hpp"
+#include "usuario.hpp"
+#include "cadena.hpp"
 #include <cstddef>
+bool luhn(const Cadena& numero);
+std::set<Numero> Tarjeta:: TAR_;
 
-Numero::Numero(Cadena& num){
-
+Numero::Numero(const Cadena& num){
+    
     char aux[num.length() + 1];
     int i = 0;
     int j;
+    
     for(j = 0; j < num.length(); j++){ //quitamos los espacios en blanco y guardamos en aux
 
         if (isdigit(num[j])){
@@ -19,20 +24,20 @@ Numero::Numero(Cadena& num){
         }
     }
     aux[i] = '\0';
-    num = aux;
+    Cadena A = aux;
 
-    if(num.length() < 13 || num.length() < 19){
+    if(A.length() < 13 || A.length() > 19){
         throw Incorrecto(LONGITUD);
     }
 
-    if(!luhn(num)){
+    if(!luhn(A)){
         throw Incorrecto(NO_VALIDO);
     }
-    num_ = num;
+    num_ = A;
 
 }
 
-bool luhn(const Cadena& numero){
+/*bool luhn(const Cadena& numero){
   size_t n = numero.length();
   size_t suma = 0;
   bool alt = false;
@@ -47,7 +52,7 @@ bool luhn(const Cadena& numero){
     suma += n;
   }
   return !(suma % 10);
-}
+}*/
 
 Numero::operator const char *() const{
     
@@ -66,7 +71,7 @@ Tarjeta::Tarjeta(const Numero& num, Usuario& tit, const Fecha& fech): numero_(nu
 
         throw Caducada(fech);
     }
-    if(TAR_.insert(num).second == false){
+    if(TAR_.insert(num).second == false){ //si no esta duplicado
 
         throw Num_duplicado(num);
     }
@@ -110,8 +115,15 @@ void Tarjeta::anula_titular(){
 std::ostream& operator <<(std::ostream& os, const Tarjeta& tar){
     os << tar.tipo() << '\n';
     os << tar.numero() << '\n';
-    os << tar.titular().nombre() << " ";
-    os << tar.titular().apellidos() << '\n';
+    //ahora recorremos las cadenas nombre y apellido y transformamos a mayusculas todas sus letras
+    for(auto iter = tar.titular()->nombre().begin(); iter != tar.titular()->nombre().end(); iter++){
+        os << static_cast<char>(toupper(*iter)); //obligamos al iterador a ser un caracter
+    }
+    os << " ";
+    for(auto iter = tar.titular()->apellidos().begin(); iter != tar.titular()->apellidos().end(); iter++){
+        os << static_cast<char>(toupper(*iter)); //obligamos al iterador a ser un caracter
+    }
+    os << "\n";
     os << "Caduca: " << std::setw(2) << std::setfill('0') << tar.caducidad().mes() << '/' << std::setw(2) << std::setfill('0') << tar.caducidad().anno() % 100;
     return os;
 }
@@ -133,10 +145,14 @@ std::ostream &operator<<(std::ostream &os, Tarjeta::Tipo t){
     return os;
 }
 
-bool operator <(Tarjeta& a, Tarjeta& b){
-    return(a.numero_ < b.numero_);
+bool operator <(const Tarjeta& a, const Tarjeta& b){
+    return a.numero() < b.numero();
 }
 
 Tarjeta::~Tarjeta(){
-    const_cast<Usuario*>(titular_)->no_es_titular_de(*this);
+    TAR_.erase(numero_);
+
+    if(titular_ != nullptr){
+        const_cast<Usuario*>(titular_)->no_es_titular_de(*this);
+    }
 }
