@@ -41,7 +41,7 @@ void Fecha::probar_dia(unsigned d, unsigned m, unsigned a){
         dia_ = dt->tm_mday;
 }
 
-void Fecha::probar_mes(unsigned m){
+void Fecha::probar_mes(const unsigned m){
     if (m == 0){
         mes_ = dt->tm_mon + 1;
     }
@@ -53,7 +53,7 @@ void Fecha::probar_mes(unsigned m){
     }
 }
 
-void Fecha::probar_anno(unsigned a){
+void Fecha::probar_anno(const unsigned a){
     if (a == 0){
         anno_ = dt->tm_year + 1900;
     }

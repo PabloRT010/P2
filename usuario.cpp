@@ -9,8 +9,8 @@ Clave::Clave(const char* contr){
 
     if(strlen(contr) < 5)
         throw Clave::Incorrecta(Clave::CORTA);
-
-    const char* caracteres = "0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+        
+    const char* caracteres = "0123456789abcdefghijklmnopqrstuvwxyz/.ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     srand(rand() % 100);
     const char salt[2] = {caracteres[rand() % 64], caracteres[rand() % 64]};
     
@@ -30,8 +30,8 @@ bool Clave::verifica(const char* cad) const{
 //Usuario 
 Usuario::Usuario(const Cadena& id, const Cadena& nom, const Cadena& apell, const Cadena& dir, const Clave& clave): id_(id), nom_(nom), apell_(apell), dir_(dir), clave_(clave){
 
-    if(ID_.insert(id).second == false){ //un conjunto no admite elementos duplicados, este metodo devuelve un booleano de si esta o no en el conjunto
-        throw Id_duplicado(id);
+    if(!ID_.insert(id).second){ //un conjunto no admite elementos duplicados, este metodo devuelve un booleano de si esta o no en el conjunto
+        throw Usuario::Id_duplicado(id);
     }
     
 }
@@ -70,13 +70,14 @@ std::ostream& operator << (std::ostream& os, const Usuario& u){
     return os;
 }
 
-std::ostream& mostrar_carro(std::ostream& os, Usuario& u){
+std::ostream& mostrar_carro(std::ostream& os, const Usuario& u){
 
     os << "Carrito de compra de " << u.id() << " [Articulos:" << u.compra().size()<<"] " << std::endl;
     os << "===================================================================="<<std::endl;
 
     for (Usuario::Articulos::const_iterator it = u.compra().begin(); it != u.compra().end(); it++){
-        os<<"\t" << it->second <<"\t"<< it->first << "\n";
+        os<<"\t" << it->second << " ["<< it->first->referencia() <<"] \""<< it->first->titulo()<<"\", " << it->first->f_publi().anno()<<". "<<std::fixed<< std::setprecision(2) << it->first->precio() << " €" << std::endl;
+
     }
 
     return os;

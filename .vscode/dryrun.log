@@ -13,6 +13,7 @@ g++ -std=c++17 -g -pedantic -Wall  -I../P1 -I../Tests-auto -I. -DP2  -c -o ../Te
 g++ -std=c++17 -g -pedantic -Wall  -I../P1 -I../Tests-auto -I. -DP2  -c -o ../Tests-auto/test-caso0-fecha-auto.o ../Tests-auto/test-caso0-fecha-auto.cpp
 g++ -std=c++17 -g -pedantic -Wall  -I../P1 -I../Tests-auto -I. -DP2  -c -o ../Tests-auto/test-caso1-2-auto.o ../Tests-auto/test-caso1-2-auto.cpp
 g++ -std=c++17 -g -pedantic -Wall  -I../P1 -I../Tests-auto -I. -DP2  -c -o ../Tests-auto/test-auto.o ../Tests-auto/test-auto.cpp
+ 
 g++ -o test-P2-auto  ../Tests-auto/test-caso0-cadena-auto.o ../Tests-auto/test-caso0-fecha-auto.o ../Tests-auto/test-caso1-2-auto.o ../Tests-auto/test-auto.o usuario.o tarjeta.o articulo.o ../P1/cadena.o ../P1/fecha.o ../luhn.o -lcrypt
 echo "Prueba 'make help' para más objetivos interesantes"
 make: Leaving directory '/home/pablo/Downloads/Reyes_Torrejon_Pablo/P2'

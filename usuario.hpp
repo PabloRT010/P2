@@ -84,6 +84,6 @@ class Usuario{
 
 };
 
-std::ostream& mostrar_carro(std::ostream& os, Usuario& u);
+std::ostream& mostrar_carro(std::ostream& os, const Usuario& u);
 
 #endif
