@@ -10,7 +10,7 @@
         "name": "(gdb) Launch",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/test-P2-auto",
+        "program": "${workspaceFolder}/test-consola",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",
